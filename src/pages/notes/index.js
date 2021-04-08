@@ -39,7 +39,6 @@ const Page = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         message.loading({ content: '添加中...', key: messageKey })
-        console.log(event.target, 'event')
         const note = {
             content: inputValue,
             date: new Date().toISOString(),
