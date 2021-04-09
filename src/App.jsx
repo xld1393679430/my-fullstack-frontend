@@ -13,8 +13,6 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
 
   const notesToShow = showAll ? notes : notes.filter((item) => item.important);
@@ -42,7 +40,7 @@ function App() {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async ({ username, password }) => {
     console.log(username, password, 'handleLogin');
     const loginMessageKey = 'loginMessageKey';
     message.loading({ content: '登陆中...', key: loginMessageKey });
@@ -52,12 +50,16 @@ function App() {
       localStorage.setItem('loggedNoteappUser', JSON.stringify(_user));
       noteServer.setToken(_user.token);
       setUser(_user);
-      setUsername('');
-      setPassword('');
     } catch (error) {
       console.log(error, error.response, 'error---');
       message.warning({ content: `登录失败: ${error.response.data.error}`, key: loginMessageKey });
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.setItem('loggedNoteappUser', '');
+    noteServer.setToken(null);
+    setUser(null);
   };
 
   const loginForm = () => (
@@ -69,10 +71,6 @@ function App() {
     )}
     >
       <LoginForm
-        username={username}
-        password={password}
-        handleUsernameChange={({ target }) => setUsername(target.value)}
-        handlePasswordChange={({ target }) => setPassword(target.value)}
         handleLogin={handleLogin}
       />
     </Toggleable>
@@ -115,6 +113,7 @@ function App() {
             <p>
               <span>{user.name}</span>
               <span>logged in</span>
+              <Button type="link" onClick={handleLogout}>退出</Button>
             </p>
             {noteForm()}
           </div>

@@ -2,7 +2,8 @@
 
 .container {
   margin: 60px auto 0;
-  width: 1000px;
+  padding: 12px 24px;
+  max-width: 1000px;
 }
 h1 {
     color: green;
