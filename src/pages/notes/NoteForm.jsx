@@ -25,7 +25,7 @@ const NoteForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Input
-        style={{ width: 420 }}
+        style={{ maxWidth: 420 }}
         size="middle"
         placeholder="请输入"
         value={inputValue}

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Button } from 'antd';
+import PropTypes from 'prop-types';
 
-const Toggleable = ({
+const Toggleable = forwardRef(({
   buttonLabel,
   children,
-}) => {
+}, ref) => {
   const [visible, setVisible] = useState(false);
 
   const hideWhenVisible = { display: visible ? 'none' : '' };
@@ -13,6 +14,10 @@ const Toggleable = ({
   const toggleVisibility = () => {
     setVisible(!visible);
   };
+
+  useImperativeHandle(ref, () => ({
+    toggleVisibility,
+  }));
 
   return (
     <div>
@@ -25,6 +30,13 @@ const Toggleable = ({
       </div>
     </div>
   );
+});
+
+Toggleable.propTypes = {
+  buttonLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]).isRequired,
 };
 
 export default Toggleable;

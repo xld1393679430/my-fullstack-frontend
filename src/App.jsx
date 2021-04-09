@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { message, Button } from 'antd';
 import { PlusOutlined, DribbbleOutlined } from '@ant-design/icons';
 import Toggleable from './components/Toggleable';
 import Note from './components/Note';
-import LoginForm from './pages/login/loginForm';
+import LoginForm from './pages/login/LoginForm';
 import NoteForm from './pages/notes/NoteForm';
 import loginServer from './services/login';
 import noteServer from './services/notes';
 import './App.css';
 
 function App() {
+  const noteFormRef = useRef();
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
@@ -35,6 +36,8 @@ function App() {
       await noteServer.createNote(note);
       message.success({ content: '添加成功', key: addNoteMessageKey });
       setNotes(notes.concat(note));
+      console.log(noteFormRef.current, 'noteFormRef.current');
+      noteFormRef.current.toggleVisibility();
     } catch (error) {
       message.error({ content: '添加失败', key: addNoteMessageKey });
     }
@@ -77,12 +80,14 @@ function App() {
   );
 
   const noteForm = () => (
-    <Toggleable buttonLabel={(
-      <span>
-        <PlusOutlined />
-        {' '}
-        new note
-      </span>
+    <Toggleable
+      ref={noteFormRef}
+      buttonLabel={(
+        <span>
+          <PlusOutlined />
+          {' '}
+          new note
+        </span>
 )}
     >
       <NoteForm

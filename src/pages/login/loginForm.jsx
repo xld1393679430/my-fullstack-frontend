@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button, Form } from 'antd';
 
-const loginForm = ({
+const LoginForm = ({
   handleLogin,
 }) => {
   const [username, setUsername] = useState('');
@@ -49,4 +49,4 @@ const loginForm = ({
   );
 };
 
-export default loginForm;
+export default LoginForm;
