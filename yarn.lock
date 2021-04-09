@@ -1675,7 +1675,7 @@
     lz-string "^1.4.4"
     pretty-format "^26.6.2"
 
-"@testing-library/jest-dom@^5.11.4":
+"@testing-library/jest-dom@^5.11.10":
   version "5.11.10"
   resolved "https://registry.npm.taobao.org/@testing-library/jest-dom/download/@testing-library/jest-dom-5.11.10.tgz?cache=0&sync_timestamp=1616688550496&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40testing-library%2Fjest-dom%2Fdownload%2F%40testing-library%2Fjest-dom-5.11.10.tgz#1cd90715023e1627f5ed26ab3b38e6f22d77046c"
   integrity sha1-HNkHFQI+Fif17SarOzjm8i13BGw=
@@ -1689,7 +1689,7 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react@^11.1.0":
+"@testing-library/react@^11.2.6":
   version "11.2.6"
   resolved "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-11.2.6.tgz#586a23adc63615985d85be0c903f374dab19200b"
   integrity sha1-WGojrcY2FZhdhb4MkD83TasZIAs=
@@ -4752,7 +4752,7 @@ eslint-plugin-import@^2.22.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest@^24.1.0:
+eslint-plugin-jest@^24.1.0, eslint-plugin-jest@^24.3.4:
   version "24.3.4"
   resolved "https://registry.npm.taobao.org/eslint-plugin-jest/download/eslint-plugin-jest-24.3.4.tgz#6d90c3554de0302e879603dd6405474c98849f19"
   integrity sha1-bZDDVU3gMC6HlgPdZAVHTJiEnxk=
