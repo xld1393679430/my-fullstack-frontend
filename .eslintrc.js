@@ -27,5 +27,7 @@ module.exports = {
     'no-console': 'off',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off',
+    'react/button-has-type': 'off',
+    'react/destructuring-assignment': 'off',
   },
 };
