@@ -1,7 +1,6 @@
-import React from "react";
-import { Button } from 'antd';
+import React from 'react';
 import './App.css';
-import Notes from './pages/notes'
+import Notes from './pages/notes';
 
 function App() {
   return (
