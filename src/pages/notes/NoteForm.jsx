@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { message, Button, Input } from 'antd';
+import { Button, Input } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
-import noteServer from '../../services/notes';
 
 const NoteForm = ({
   createNote,
@@ -12,7 +11,7 @@ const NoteForm = ({
     event.preventDefault();
     const note = {
       content: inputValue,
-      important: Math.random() < 0.5,
+      important: true,
     };
     createNote(note);
     setInputValue('');

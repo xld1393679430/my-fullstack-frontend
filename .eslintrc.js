@@ -43,6 +43,8 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/button-has-type': 'off',
     'react/destructuring-assignment': 'off',
+    'no-case-declarations': 'off',
+    'no-self-assign': 'off',
   },
   'settings': {
     'react': {

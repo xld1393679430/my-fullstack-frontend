@@ -1,10 +1,5 @@
-import { message, Button } from 'antd';
-import React, { useState, useEffect } from 'react';
-import noteServer from '../../services/notes';
-import loginServer from '../../services/login';
+import React from 'react';
 import './index.css';
-
-
 
 const Page = () => (
   <div>notes</div>
