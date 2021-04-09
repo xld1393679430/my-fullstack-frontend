@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+.container {
+  margin: 60px auto 0;
+  width: 1000px;
+}
 h1 {
     color: green;
     font-style: italic;
@@ -9,6 +13,7 @@ h1 {
     color: grey;
     padding-top: 3px;
     font-size: 15px;
+    margin-bottom: 10px;
   }
   
   .error {

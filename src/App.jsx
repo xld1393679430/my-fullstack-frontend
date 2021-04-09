@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { message, Button } from 'antd';
+import { PlusOutlined, DribbbleOutlined } from '@ant-design/icons';
 import Toggleable from './components/Toggleable';
 import Note from './components/Note';
 import LoginForm from './pages/login/loginForm';
@@ -9,9 +10,7 @@ import noteServer from './services/notes';
 import './App.css';
 
 function App() {
-  const addNoteMessageKey = 'addNoteMessageKey';
   const [notes, setNotes] = useState([]);
-  const [inputValue, setInputValue] = useState('');
   const [showAll, setShowAll] = useState(false);
   const [loginVisible, setLoginVisible] = useState(false);
   const [username, setUsername] = useState('');
@@ -19,28 +18,6 @@ function App() {
   const [user, setUser] = useState(null);
 
   const notesToShow = showAll ? notes : notes.filter((item) => item.important);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    message.loading({ content: '添加中...', key: addNoteMessageKey });
-    const note = {
-      content: inputValue,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5,
-    };
-    try {
-      await noteServer.createNote(note);
-      message.success({ content: '添加成功', key: addNoteMessageKey });
-      setNotes(notes.concat(note));
-      setInputValue('');
-    } catch (error) {
-      message.error({ content: '添加失败', key: addNoteMessageKey });
-    }
-  };
-
-  const handleChangeInputValue = (event) => {
-    setInputValue(event.target.value);
-  };
 
   const handleToggleShowAll = () => {
     setShowAll(!showAll);
@@ -53,8 +30,19 @@ function App() {
     setNotes(notes.map((item) => (item.id === id ? data : item)));
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const createNote = async (note) => {
+    const addNoteMessageKey = 'addNoteMessageKey';
+    message.loading({ content: '添加中...', key: addNoteMessageKey });
+    try {
+      await noteServer.createNote(note);
+      message.success({ content: '添加成功', key: addNoteMessageKey });
+      setNotes(notes.concat(note));
+    } catch (error) {
+      message.error({ content: '添加失败', key: addNoteMessageKey });
+    }
+  };
+
+  const handleLogin = async () => {
     console.log(username, password, 'handleLogin');
     const loginMessageKey = 'loginMessageKey';
     message.loading({ content: '登陆中...', key: loginMessageKey });
@@ -73,7 +61,13 @@ function App() {
   };
 
   const loginForm = () => (
-    <Toggleable buttonLabel="log in">
+    <Toggleable buttonLabel={(
+      <span>
+        <DribbbleOutlined />
+        <span style={{ marginLeft: 8 }}>登录</span>
+      </span>
+    )}
+    >
       <LoginForm
         username={username}
         password={password}
@@ -85,11 +79,16 @@ function App() {
   );
 
   const noteForm = () => (
-    <Toggleable buttonLabel="new note">
+    <Toggleable buttonLabel={(
+      <span>
+        <PlusOutlined />
+        {' '}
+        new note
+      </span>
+)}
+    >
       <NoteForm
-        inputValue={inputValue}
-        handleSubmit={handleSubmit}
-        handleChangeInputValue={handleChangeInputValue}
+        createNote={createNote}
       />
     </Toggleable>
   );
@@ -108,10 +107,10 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>notes</h1>
-      {user
-        ? (
+      <div style={{ margin: '10xp 0' }}>
+        {user ? (
           <div>
             <p>
               <span>{user.name}</span>
@@ -119,10 +118,12 @@ function App() {
             </p>
             {noteForm()}
           </div>
-        )
-        : loginForm()}
-      <hr />
-      <Button onClick={handleToggleShowAll}>
+        ) : loginForm()}
+      </div>
+      <Button
+        style={{ margin: '10px 0' }}
+        onClick={handleToggleShowAll}
+      >
         {showAll ? 'show important' : 'show all'}
       </Button>
       <ul>
@@ -132,6 +133,7 @@ function App() {
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 note={item}
+                index={index}
                 toggleImportant={() => handleToggleImportant(item.id)}
               />
             ))

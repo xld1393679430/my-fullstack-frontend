@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input, Button, Form } from 'antd';
 
 const loginForm = ({
   handleLogin,
@@ -9,37 +10,37 @@ const loginForm = ({
 }) => (
   <div>
     <h2>Login</h2>
-    <form onSubmit={handleLogin}>
+    <Form onFinish={handleLogin}>
+      <Form.Item
+        label="Username"
+        name="username"
+      >
+        <Input
+          id="username"
+          type="text"
+          placeholder="请输入username"
+          name="username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+      </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+      >
+        <Input
+          id="password"
+          type="text"
+          placeholder="请输入password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+      </Form.Item>
       <div>
-        <label htmlFor="username">
-          username:
-          <input
-            id="username"
-            type="text"
-            placeholder="请输入username"
-            name="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </label>
+        <Button htmlType="submit">登录</Button>
       </div>
-      <div>
-        <label htmlFor="password">
-          password:
-          <input
-            id="password"
-            type="text"
-            placeholder="请输入password"
-            name="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </label>
-      </div>
-      <div>
-        <button type="submit">登录</button>
-      </div>
-    </form>
+    </Form>
   </div>
 );
 

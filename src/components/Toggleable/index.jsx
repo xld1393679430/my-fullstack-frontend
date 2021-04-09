@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from 'antd';
 
 const Toggleable = ({
   buttonLabel,
@@ -16,11 +17,11 @@ const Toggleable = ({
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{buttonLabel}</button>
+        <Button onClick={toggleVisibility}>{buttonLabel}</Button>
       </div>
       <div style={showWhenVisible}>
         {children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <Button style={{ marginTop: 10 }} onClick={toggleVisibility}>cancel</Button>
       </div>
     </div>
   );
