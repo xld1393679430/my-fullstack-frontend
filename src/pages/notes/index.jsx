@@ -65,8 +65,9 @@ const Page = () => {
     message.loading({ content: '登陆中...', key: loginMessageKey });
     try {
       const _user = await loginServer.login(username, password);
-      console.log(_user, 'user');
       message.success({ content: '登录成功', key: loginMessageKey });
+      localStorage.setItem('loggedNoteappUser', JSON.stringify(_user));
+      noteServer.setToken(_user.token);
       setUser(_user);
       setUsername('');
       setPassword('');
@@ -123,6 +124,15 @@ const Page = () => {
 
   useEffect(() => {
     noteServer.getNotes().then((data) => setNotes(data));
+  }, []);
+
+  useEffect(() => {
+    const loggedNoteappUser = localStorage.getItem('loggedNoteappUser');
+    if (loggedNoteappUser) {
+      const _user = JSON.parse(loggedNoteappUser);
+      setUser(_user);
+      noteServer.setToken(_user.token);
+    }
   }, []);
 
   return (
