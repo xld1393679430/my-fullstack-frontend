@@ -11,6 +11,8 @@ import Notes from './pages/notes';
 import Users from './pages/users'
 import Login from './pages/login'
 import Home from './pages/home'
+import Count from './pages/counter'
+import Count2 from './pages/counter2'
 import './App.css';
 
 import { initNoteAction, toggleImportanceOfAction } from './actions/noteAction';
@@ -51,9 +53,17 @@ function App() {
         <Link className='block' to='/'>home</Link>
         <Link className='block' to='/notes'>notes</Link>
         <Link className='block' to='/users'>users</Link>
+        <Link className='block' to='/count'>count</Link>
+        <Link className='block' to='/count2'>count2</Link>
       </div>
 
       <Switch>
+        <Route path='/count'>
+          <Count />
+        </Route>
+        <Route path='/count2'>
+          <Count2 />
+        </Route>
          <Route path='/notes/:id'>
           <Note />
         </Route>

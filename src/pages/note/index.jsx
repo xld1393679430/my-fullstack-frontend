@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const Page = () => {
     const { notes } = useSelector(state => state)
-    const routerMatch = useRouteMatch()
-    const { params: { id } } = routerMatch
-
+    const { id } = useParams()
     return (
         <div>
-            note id: {id}
+            note id: { id }
         </div>
     )
 }
