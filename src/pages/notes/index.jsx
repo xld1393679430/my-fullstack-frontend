@@ -2,20 +2,22 @@ import React, { useRef } from 'react';
 import { Button, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Toggleable from '../../components/Toggleable'
 import NoteForm from './NoteForm'
 import { createNoteAction } from '../../actions/noteAction'
 import './index.css';
 
 const Page = ({
-  notes,
   showAll,
   handleToggleShowAll,
 }) => {
+  const { notes, user } = useSelector(state => state)
   const noteFormRef = useRef();
-
   const dispatch = useDispatch()
+
+  let notesToShow = showAll ? notes : notes.filter((item) => item.important)
+  notesToShow = [].concat(notesToShow).reverse()
 
   const createNote = async (note) => {
     dispatch(createNoteAction(note, noteFormRef))
@@ -39,19 +41,23 @@ const Page = ({
 
   return (
     <div>
-       <Toggleable
-        ref={noteFormRef}
-        buttonLabel={(
-          <span>
-            <PlusOutlined />
-            <span>new note</span>
-          </span>
-        )}
-      >
-        <NoteForm
-          createNote={createNote}
-        />
-      </Toggleable>
+      {
+        user && (
+          <Toggleable
+            ref={noteFormRef}
+            buttonLabel={(
+              <span>
+                <PlusOutlined />
+                <span>new note</span>
+              </span>
+            )}
+          >
+            <NoteForm
+              createNote={createNote}
+            />
+          </Toggleable>
+        )
+      }
       <Button
           style={{ margin: '10px 0' }}
           onClick={handleToggleShowAll}

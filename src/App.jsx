@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useHistory,
 } from 'react-router-dom';
 import noteServer from './services/notes';
 import Note from './pages/note'
@@ -23,10 +24,11 @@ import { useSelector, useDispatch } from 'react-redux';
 const { Header, Content, Footer } = Layout;
 
 function App() {
-
   const { notes, user } = useSelector(state => state)
   const dispatch = useDispatch()
+  const { location: { pathname } }= useHistory();
   const [showAll, setShowAll] = useState(true);
+  const [currentKey, setCurrentKey] = useState('')
 
   let notesToShow = showAll ? notes : notes.filter((item) => item.important)
   notesToShow = [].concat(notesToShow).reverse()
@@ -40,22 +42,29 @@ function App() {
   };
 
   useEffect(() => {
+    setCurrentKey(pathname)
+
     const loggedNoteappUser = localStorage.getItem('loggedNoteappUser');
     if (loggedNoteappUser) {
       const _user = JSON.parse(loggedNoteappUser);
       dispatch(userUpdateAction(_user))
       noteServer.setToken(_user.token);
     }
-
     dispatch(initNoteAction())
   }, []);
 
+  console.log(currentKey, 'currentKey')
   return (
     <div className="container">
       <Layout className="layout">
           <Header>
             <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['/']}>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              selectedKeys={[currentKey]}
+              onClick={(event) => setCurrentKey(event.key)}
+            >
               <Menu.Item key="/">
               <Link className='block' to='/'>home</Link>
               </Menu.Item>
@@ -74,11 +83,6 @@ function App() {
             </Menu>
           </Header>
           <Content style={{ padding: '0 50px' }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb> */}
             <div className="site-layout-content">
               <Switch>
                 <Route path='/count'>
@@ -92,7 +96,6 @@ function App() {
                 </Route>
                 <Route path='/notes'>
                   <Notes
-                    notes={notesToShow}
                     showAll={showAll}
                     handleToggleShowAll={handleToggleShowAll}
                     handleToggleImportant={handleToggleImportant}
@@ -108,7 +111,6 @@ function App() {
                     <Home />
                 </Route>
               </Switch>
-
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
