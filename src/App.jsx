@@ -1,23 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button } from 'antd';
-import { PlusOutlined, DribbbleOutlined } from '@ant-design/icons';
-import Toggleable from './components/Toggleable';
-import Note from './components/Note';
-import LoginForm from './pages/login/LoginForm';
-import NoteForm from './pages/notes/NoteForm';
+import React, { useState, useEffect } from 'react';
+import {
+  Link,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import noteServer from './services/notes';
+import Note from './pages/note'
+import Notes from './pages/notes';
+import Users from './pages/users'
+import Login from './pages/login'
+import Home from './pages/home'
 import './App.css';
 
-import { initNoteAction, createNoteAction, toggleImportanceOfAction } from './actions/noteAction'
-import { userLoginAction, userLogoutAction, userUpdateAction } from './actions/userAction'
-import { useSelector, useDispatch } from 'react-redux'
+import { initNoteAction, toggleImportanceOfAction } from './actions/noteAction';
+import { userUpdateAction } from './actions/userAction';
+import { useSelector, useDispatch } from 'react-redux';
 
 function App() {
-  const noteFormRef = useRef();
+
   const { notes, user } = useSelector(state => state)
   const dispatch = useDispatch()
   const [showAll, setShowAll] = useState(true);
-  const [loginVisible, setLoginVisible] = useState(false);
 
   let notesToShow = showAll ? notes : notes.filter((item) => item.important)
   notesToShow = [].concat(notesToShow).reverse()
@@ -30,55 +34,6 @@ function App() {
     dispatch(toggleImportanceOfAction(id))
   };
 
-  const createNote = async (note) => {
-    dispatch(createNoteAction(note, noteFormRef))
-  };
-
-  const handleLogin = async ({ username, password }) => {
-    dispatch(userLoginAction({ username, password }))
-  };
-
-  const handleLogout = () => {
-    localStorage.setItem('loggedNoteappUser', '');
-    noteServer.setToken(null);
-    dispatch(userLogoutAction())
-  };
-
-  const loginForm = () => (
-    <Toggleable buttonLabel={(
-      <span>
-        <DribbbleOutlined />
-        <span style={{ marginLeft: 8 }}>登录</span>
-      </span>
-    )}
-    >
-      <LoginForm
-        handleLogin={handleLogin}
-      />
-    </Toggleable>
-  );
-
-  const noteForm = () => (
-    <Toggleable
-      ref={noteFormRef}
-      buttonLabel={(
-        <span>
-          <PlusOutlined />
-          {' '}
-          new note
-        </span>
-)}
-    >
-      <NoteForm
-        createNote={createNote}
-      />
-    </Toggleable>
-  );
-
-  useEffect(() => {
-    dispatch(initNoteAction())
-  }, []);
-
   useEffect(() => {
     const loggedNoteappUser = localStorage.getItem('loggedNoteappUser');
     if (loggedNoteappUser) {
@@ -86,42 +41,45 @@ function App() {
       dispatch(userUpdateAction(_user))
       noteServer.setToken(_user.token);
     }
+
+    dispatch(initNoteAction())
   }, []);
 
   return (
     <div className="container">
-      <h1>notes</h1>
-      <div style={{ margin: '10xp 0' }}>
-        {user ? (
-          <div>
-            <p>
-              <span>{user.name}</span>
-              <span>logged in</span>
-              <Button type="link" onClick={handleLogout}>退出</Button>
-            </p>
-            {noteForm()}
-          </div>
-        ) : loginForm()}
+      <div>
+        <Link className='block' to='/'>home</Link>
+        <Link className='block' to='/notes'>notes</Link>
+        <Link className='block' to='/users'>users</Link>
       </div>
-      <Button
-        style={{ margin: '10px 0' }}
-        onClick={handleToggleShowAll}
-      >
-        {showAll ? 'show important' : 'show all'}
-      </Button>
-      <ul>
-        {
-            notesToShow.map((item, index) => (
-              <Note
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                note={item}
-                index={index}
-                toggleImportant={() => handleToggleImportant(item.id)}
-              />
-            ))
-        }
-      </ul>
+
+      <Switch>
+         <Route path='/notes/:id'>
+          <Note />
+        </Route>
+        <Route path='/notes'>
+          <Notes
+            notes={notesToShow}
+            showAll={showAll}
+            handleToggleShowAll={handleToggleShowAll}
+            handleToggleImportant={handleToggleImportant}
+          />
+        </Route>
+        <Route path="/users">
+          {user ? <Users user={user} /> : <Redirect to='login' /> }
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/'>
+            <Home />
+        </Route>
+      </Switch>
+
+      <div>
+        <br />
+        <em>Note app, Department of Computer Science 2021</em>
+      </div>
     </div>
   );
 }
