@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Breadcrumb } from 'antd';
 import {
   Link,
   Switch,
@@ -18,6 +19,8 @@ import './App.css';
 import { initNoteAction, toggleImportanceOfAction } from './actions/noteAction';
 import { userUpdateAction } from './actions/userAction';
 import { useSelector, useDispatch } from 'react-redux';
+
+const { Header, Content, Footer } = Layout;
 
 function App() {
 
@@ -49,47 +52,67 @@ function App() {
 
   return (
     <div className="container">
-      <div>
-        <Link className='block' to='/'>home</Link>
-        <Link className='block' to='/notes'>notes</Link>
-        <Link className='block' to='/users'>users</Link>
-        <Link className='block' to='/count'>count</Link>
-        <Link className='block' to='/count2'>count2</Link>
-      </div>
+      <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['/']}>
+              <Menu.Item key="/">
+              <Link className='block' to='/'>home</Link>
+              </Menu.Item>
+              <Menu.Item key="/notes">
+              <Link className='block' to='/notes'>notes</Link>
+              </Menu.Item>
+              <Menu.Item key="/users">
+              <Link className='block' to='/users'>users</Link>
+              </Menu.Item>
+              <Menu.Item key="/count">
+              <Link className='block' to='/count'>count</Link>
+              </Menu.Item>
+              <Menu.Item key="/count2">
+              <Link className='block' to='/count2'>count2</Link>
+              </Menu.Item>
+            </Menu>
+          </Header>
+          <Content style={{ padding: '0 50px' }}>
+            {/* <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>App</Breadcrumb.Item>
+            </Breadcrumb> */}
+            <div className="site-layout-content">
+              <Switch>
+                <Route path='/count'>
+                  <Count />
+                </Route>
+                <Route path='/count2'>
+                  <Count2 />
+                </Route>
+                <Route path='/notes/:id'>
+                  <Note />
+                </Route>
+                <Route path='/notes'>
+                  <Notes
+                    notes={notesToShow}
+                    showAll={showAll}
+                    handleToggleShowAll={handleToggleShowAll}
+                    handleToggleImportant={handleToggleImportant}
+                  />
+                </Route>
+                <Route path="/users">
+                  {user ? <Users user={user} /> : <Redirect to='login' /> }
+                </Route>
+                <Route path='/login'>
+                  <Login />
+                </Route>
+                <Route path='/'>
+                    <Home />
+                </Route>
+              </Switch>
 
-      <Switch>
-        <Route path='/count'>
-          <Count />
-        </Route>
-        <Route path='/count2'>
-          <Count2 />
-        </Route>
-         <Route path='/notes/:id'>
-          <Note />
-        </Route>
-        <Route path='/notes'>
-          <Notes
-            notes={notesToShow}
-            showAll={showAll}
-            handleToggleShowAll={handleToggleShowAll}
-            handleToggleImportant={handleToggleImportant}
-          />
-        </Route>
-        <Route path="/users">
-          {user ? <Users user={user} /> : <Redirect to='login' /> }
-        </Route>
-        <Route path='/login'>
-          <Login />
-        </Route>
-        <Route path='/'>
-            <Home />
-        </Route>
-      </Switch>
-
-      <div>
-        <br />
-        <em>Note app, Department of Computer Science 2021</em>
-      </div>
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </Layout>
     </div>
   );
 }

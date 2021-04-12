@@ -1,32 +1,29 @@
 @import '~antd/dist/antd.css';
 
 .container {
-  margin: 60px auto 0;
-  padding: 12px 24px;
-  max-width: 1000px;
+  min-height: 100vh;
 }
-h1 {
-    color: green;
-    font-style: italic;
-  }
-  
-  .note {
-    color: grey;
-    padding-top: 3px;
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-  
-  .error {
-    color: red;
-    background: lightgrey;
-    font-size: 20px;
-    border-style: solid;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+.block {
+  display: block;
+}
 
-  .block {
-    display: block;
-  }
+.layout {
+  min-height: 100vh;
+}
+
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
+}
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}

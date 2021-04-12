@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button } from 'antd'
+import { Button, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -20,6 +20,22 @@ const Page = ({
   const createNote = async (note) => {
     dispatch(createNoteAction(note, noteFormRef))
   };
+
+  const columns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+      key: 'id',
+    }, {
+      title: 'content',
+      dataIndex: 'content',
+      key: 'content',
+      // eslint-disable-next-line react/display-name
+      render: (_, record) => (
+        <Link to={`/notes/${record.id}`}>{record.content}</Link>
+      )
+    }
+  ]
 
   return (
     <div>
@@ -42,15 +58,11 @@ const Page = ({
         >
           {showAll ? 'show important' : 'show all'}
       </Button>
-      <ul>
-          {
-              notes.map((item, index) => (
-                <li key={item.id}>
-                  <Link to={`/notes/${item.id}`}>{item.content}</Link>
-                </li>
-              ))
-          }
-      </ul>
+
+      <Table
+      rowKey={'id'}
+      columns={columns}
+      dataSource={notes} ren />
   </div>
   )
 };
