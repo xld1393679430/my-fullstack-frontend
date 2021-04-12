@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
@@ -8,16 +8,18 @@ import NoteForm from './NoteForm'
 import { createNoteAction } from '../../actions/noteAction'
 import './index.css';
 
-const Page = ({
-  showAll,
-  handleToggleShowAll,
-}) => {
+const Page = () => {
   const { notes, user } = useSelector(state => state)
   const noteFormRef = useRef();
   const dispatch = useDispatch()
+  const [showAll, setShowAll] = useState(true);
 
   let notesToShow = showAll ? notes : notes.filter((item) => item.important)
   notesToShow = [].concat(notesToShow).reverse()
+
+  const handleToggleShowAll = () => {
+    setShowAll(!showAll);
+  };
 
   const createNote = async (note) => {
     dispatch(createNoteAction(note, noteFormRef))
@@ -66,9 +68,10 @@ const Page = ({
       </Button>
 
       <Table
-      rowKey={'id'}
-      columns={columns}
-      dataSource={notes} ren />
+        rowKey={'id'}
+        columns={columns}
+        dataSource={notesToShow}
+       />
   </div>
   )
 };

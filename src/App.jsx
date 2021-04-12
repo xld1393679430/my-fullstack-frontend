@@ -24,18 +24,11 @@ import { useSelector, useDispatch } from 'react-redux';
 const { Header, Content, Footer } = Layout;
 
 function App() {
-  const { notes, user } = useSelector(state => state)
+  const { user } = useSelector(state => state)
   const dispatch = useDispatch()
   const { location: { pathname } }= useHistory();
-  const [showAll, setShowAll] = useState(true);
   const [currentKey, setCurrentKey] = useState('')
 
-  let notesToShow = showAll ? notes : notes.filter((item) => item.important)
-  notesToShow = [].concat(notesToShow).reverse()
-
-  const handleToggleShowAll = () => {
-    setShowAll(!showAll);
-  };
 
   const handleToggleImportant = async (id) => {
     dispatch(toggleImportanceOfAction(id))
@@ -95,11 +88,7 @@ function App() {
                   <Note />
                 </Route>
                 <Route path='/notes'>
-                  <Notes
-                    showAll={showAll}
-                    handleToggleShowAll={handleToggleShowAll}
-                    handleToggleImportant={handleToggleImportant}
-                  />
+                  <Notes />
                 </Route>
                 <Route path="/users">
                   {user ? <Users user={user} /> : <Redirect to='login' /> }
