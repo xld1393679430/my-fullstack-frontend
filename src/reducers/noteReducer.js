@@ -1,16 +1,16 @@
-const initialState = []
+const initialState = [];
 
 const noteReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'INIT_NOTE':
-            return action.data
+            return action.data;
         case 'NEW_NOTE':
-            return [...state, action.data]
+            return [...state, action.data];
         case 'TOGGLE_IMPORTANCE':
-            return action.data
+            return action.data;
         default:
-            return state
+            return state;
     }
-}
+};
 
-export default noteReducer
+export default noteReducer;

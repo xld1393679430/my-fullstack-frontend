@@ -1,28 +1,28 @@
 import React, { useState, useRef } from 'react';
-import { Button, Table } from 'antd'
+import { Button, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import Toggleable from '../../components/Toggleable'
-import NoteForm from './NoteForm'
-import { createNoteAction } from '../../actions/noteAction'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Toggleable from '../../components/Toggleable';
+import NoteForm from './NoteForm';
+import { createNoteAction } from '../../actions/noteAction';
 import './index.css';
 
 const Page = () => {
-  const { notes, user } = useSelector(state => state)
+  const { notes, user } = useSelector(state => state);
   const noteFormRef = useRef();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showAll, setShowAll] = useState(true);
 
-  let notesToShow = showAll ? notes : notes.filter((item) => item.important)
-  notesToShow = [].concat(notesToShow).reverse()
+  let notesToShow = showAll ? notes : notes.filter((item) => item.important);
+  notesToShow = [].concat(notesToShow).reverse();
 
   const handleToggleShowAll = () => {
     setShowAll(!showAll);
   };
 
   const createNote = async (note) => {
-    dispatch(createNoteAction(note, noteFormRef))
+    dispatch(createNoteAction(note, noteFormRef));
   };
 
   const columns = [
@@ -39,7 +39,7 @@ const Page = () => {
         <Link to={`/notes/${record.id}`}>{record.content}</Link>
       )
     }
-  ]
+  ];
 
   return (
     <div>
@@ -73,7 +73,7 @@ const Page = () => {
         dataSource={notesToShow}
        />
   </div>
-  )
+  );
 };
 
 export default Page;

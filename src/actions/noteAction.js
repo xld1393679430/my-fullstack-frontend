@@ -7,9 +7,9 @@ export const initNoteAction = (notes) => {
         dispatch({
             type: 'INIT_NOTE',
             data: notes
-        })
-    }
-}
+        });
+    };
+};
 export const createNoteAction = (note, noteFormRef) => {
     return async dispatch => {
         const addNoteMessageKey = 'addNoteMessageKey';
@@ -20,24 +20,24 @@ export const createNoteAction = (note, noteFormRef) => {
             dispatch({
                 type: 'NEW_NOTE',
                 data: _note
-            })
+            });
             noteFormRef.current.toggleVisibility();
         } catch (error) {
             message.error({ content: '添加失败', key: addNoteMessageKey });
         }
-    }
-}
+    };
+};
 
 export const toggleImportanceOfAction = (id) => {
     return async (dispatch, getState) => {
-        const { notes } = getState()
+        const { notes } = getState();
         const note = notes.find((item) => item.id === id);
         const changedNote = { ...note, important: !note.important };
         const data = await noteServer.updateNote(id, changedNote);
-        const _notes = notes.map(item => (item.id === id ? data : item))
+        const _notes = notes.map(item => (item.id === id ? data : item));
         dispatch({
             type: 'TOGGLE_IMPORTANCE',
             data: _notes,
-        })
-    }
-}
+        });
+    };
+};

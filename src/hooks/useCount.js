@@ -1,26 +1,26 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const useCount = () => {
-    let [count, setCount] = useState(0)
+    let [count, setCount] = useState(0);
 
     const increase = () => {
-        setCount(count+1)
-    }
+        setCount(count+1);
+    };
 
     const decrease = () => {
-        setCount(count-1)
-    }
+        setCount(count-1);
+    };
 
     const zero = () => {
-        setCount(0)
-    }
+        setCount(0);
+    };
 
     return {
         count,
         increase,
         decrease,
         zero
-    }
-}
+    };
+};
 
-export default useCount
+export default useCount;

@@ -2,16 +2,16 @@ import React from 'react';
 import { DribbbleOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Toggleable from '../../components/Toggleable'
-import LoginForm from './LoginForm'
-import { userLoginAction } from '../../actions/userAction'
+import Toggleable from '../../components/Toggleable';
+import LoginForm from './LoginForm';
+import { userLoginAction } from '../../actions/userAction';
 
 const Page = () => {
-    const dispatch = useDispatch()
-    const history = useHistory()
+    const dispatch = useDispatch();
+    const history = useHistory();
     const handleLogin = async ({ username, password }) => {
-        await dispatch(userLoginAction({ username, password }))
-        history.replace('/users')
+        await dispatch(userLoginAction({ username, password }));
+        history.replace('/users');
     };
     return (
         <Toggleable
@@ -26,7 +26,7 @@ const Page = () => {
                 handleLogin={handleLogin}
             />
         </Toggleable>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;

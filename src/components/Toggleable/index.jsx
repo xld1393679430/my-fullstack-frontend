@@ -39,6 +39,6 @@ Toggleable.propTypes = {
   ]).isRequired,
 };
 
-Toggleable.displayName = 'Toggleable'
+Toggleable.displayName = 'Toggleable';
 
 export default Toggleable;

@@ -5,14 +5,14 @@ export const userUpdateAction = (user) => {
     return {
         type: 'UPDATE',
         data: user
-    }
-}
+    };
+};
 
 export const userLogoutAction = () => {
     return {
         type: 'LOGOUT'
-    }
-}
+    };
+};
 
 export const userLoginAction = ({ username, password }) => {
     return async dispatch => {
@@ -26,10 +26,10 @@ export const userLoginAction = ({ username, password }) => {
             dispatch({
                 type: 'LOGIN',
                 data: _user
-            })
+            });
         } catch (error) {
             console.log(error, error.response, 'error---');
             message.warning({ content: `登录失败: ${error.response.data.error}`, key: loginMessageKey });
         }
-    }
-}
+    };
+};

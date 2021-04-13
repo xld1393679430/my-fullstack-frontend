@@ -1,9 +1,9 @@
-import React from 'react'
-import { Button } from 'antd'
-import useCount from '../../hooks/useCount'
+import React from 'react';
+import { Button } from 'antd';
+import useCount from '../../hooks/useCount';
 
 const Page = () => {
-    const { count, increase, decrease, zero } = useCount()
+    const { count, increase, decrease, zero } = useCount();
 
     return (
         <div>
@@ -12,7 +12,7 @@ const Page = () => {
             <Button onClick={decrease}>decrease</Button>
             <Button onClick={zero}>zero</Button>
         </div>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;
