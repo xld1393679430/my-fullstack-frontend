@@ -1,18 +1,16 @@
-import React from 'react'
-import { Button } from 'antd'
-import { useDispatch } from 'react-redux'
-import noteServer from '../../services/notes'
-import { userLogoutAction } from '../../actions/userAction'
+import React from 'react';
+import { Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import noteServer from '../../services/notes';
+import { userLogoutAction } from '../../actions/userAction';
 
-const Page = ({
-    user,
-}) => {
-    const dispatch = useDispatch()
-
+const Page = () => {
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state);
     const handleLogout = () => {
         localStorage.setItem('loggedNoteappUser', '');
         noteServer.setToken(null);
-        dispatch(userLogoutAction())
+        dispatch(userLogoutAction());
     };
 
     return (
@@ -23,7 +21,7 @@ const Page = ({
           <Button type="link" onClick={handleLogout}>退出</Button>
         </p>
       </div>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;

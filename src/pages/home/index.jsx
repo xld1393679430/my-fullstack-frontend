@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const Page = () => {
+function Home(){
   return (
     <div>
       <h2>TKTL notes app</h2>
     </div>
-  )
+  );
 }
-  export default Page
+
+export default Home;
