@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Toggleable from '../../components/Toggleable';
 import NoteForm from './NoteForm';
-import { createNoteAction } from '../../actions/noteAction';
+import { createNoteAction, initNoteAction } from '../../actions/noteAction';
 import './index.css';
 
 const Page = () => {
@@ -40,6 +40,10 @@ const Page = () => {
       )
     }
   ];
+
+  useEffect(() => {
+    dispatch(initNoteAction());
+  }, []);
 
   return (
     <div>

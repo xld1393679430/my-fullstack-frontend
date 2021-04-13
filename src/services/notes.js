@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from './index';
 
 const baseUrl = '/api/notes';
 
@@ -8,7 +8,7 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getNotes = async () => await axios.get(baseUrl).then((res) => res.data);
+const getNotes = async () => await http.get(baseUrl).then((res) => res.data);
 
 const createNote = async (note) => {
   const config = {
@@ -16,11 +16,11 @@ const createNote = async (note) => {
       Authorization: token,
     },
   };
-  return await axios.post(baseUrl, note, config).then((res) => res.data);
+  return await http.post(baseUrl, note, config).then((res) => res.data);
 };
 
 const updateNote = async (id, note) => {
-  return await axios.put(`${baseUrl}/${id}`, note).then((res) => res.data);
+  return await http.put(`${baseUrl}/${id}`, note).then((res) => res.data);
 };
 
 export default {

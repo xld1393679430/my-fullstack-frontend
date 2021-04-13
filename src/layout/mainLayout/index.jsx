@@ -28,7 +28,17 @@ const MainLayout = ({ children }) => {
 
   return (
     <Layout id="components-layout-demo-custom-trigger">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+        }}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
         <div className="logo" />
         <Menu
           theme="dark"
@@ -37,15 +47,17 @@ const MainLayout = ({ children }) => {
           onClick={(event) => setCurrentKey(event.key)}
         >
           {routers.map((item) => {
-            return !item.hide && (
-              <Menu.Item key={item.path} icon={<UserOutlined />}>
-                <Link to={item.path}>{item.title}</Link>
-              </Menu.Item>
+            return (
+              !item.hide && (
+                <Menu.Item key={item.path} icon={<UserOutlined />}>
+                  <Link to={item.path}>{item.title}</Link>
+                </Menu.Item>
+              )
             );
           })}
         </Menu>
       </Sider>
-      <Layout className="site-layout">
+      <Layout className="site-layout" style={{ marginLeft: 200 }}>
         <Header className="site-layout-background" style={{ padding: 0 }}>
           <span className="trigger" onClick={toggle}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

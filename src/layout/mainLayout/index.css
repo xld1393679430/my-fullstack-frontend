@@ -15,10 +15,6 @@
     margin: 16px;
     background: rgba(255, 255, 255, 0.3);
   }
-
-  #components-layout-demo-custom-trigger .ant-layout-sider {
-    height: 100vh;
-  }
   
   .site-layout .site-layout-background {
     background: #fff;
