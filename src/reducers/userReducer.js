@@ -1,16 +1,16 @@
-const initialState = null
+const initialState = null;
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN':
-            return action.data
+            return action.data;
         case 'LOGOUT':
-            return null
+            return null;
         case 'UPDATE':
-            return action.data
+            return action.data;
         default:
-            return state
+            return state;
     }
-}
+};
 
-export default userReducer
+export default userReducer;

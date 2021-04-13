@@ -8,13 +8,13 @@ import userReducer from '../reducers/userReducer';
 const reducer = combineReducers({
     notes: noteReducer,
     user: userReducer
-})
+});
 
 const store = createStore(
     reducer,
     composeWithDevTools(
         applyMiddleware(thunk)
     )
-)
+);
 
-export default store
+export default store;

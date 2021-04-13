@@ -7,15 +7,15 @@ import { Spin } from 'antd';
 import Loadable from 'react-loadable';
 
 const Loading = function () {
-    return <Spin />
-}
+    return <Spin />;
+};
 
 const lazyComponent = (path) => {
     return Loadable({
         loader: () => import(`../pages/${path}`),
         loading: Loading,
-    })
-}
+    });
+};
 
 export const routers = [
     {
@@ -49,7 +49,7 @@ export const routers = [
         title: '登录',
         component: lazyComponent('login'),
     },
-]
+];
 
 function RootRouter() {
     return (
@@ -63,11 +63,11 @@ function RootRouter() {
                             path={item.path}
                             component={item.component}
                         />
-                    )
+                    );
                 })
             }
 
         </Switch>
-    )
+    );
 }
-export default RootRouter
+export default RootRouter;
