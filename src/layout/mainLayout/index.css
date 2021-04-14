@@ -16,6 +16,14 @@
     background: rgba(255, 255, 255, 0.3);
   }
   
-  .site-layout .site-layout-background {
+  .site-layout-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: #fff!important;
+    padding: 12px 40px 12px 20px;
+  }
+
+  .site-layout-content {
     background: #fff;
   }

@@ -50,6 +50,7 @@ module.exports = {
     'react/destructuring-assignment': 'off',
     'no-case-declarations': 'off',
     'no-self-assign': 'off',
+    'no-undef': 'off',
   },
   'settings': {
     'react': {

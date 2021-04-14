@@ -9,7 +9,7 @@ import { createNoteAction, initNoteAction } from '../../actions/noteAction';
 import './index.css';
 
 const Page = () => {
-  const { notes, user } = useSelector(state => state);
+  const { notes, user } = useSelector((state) => state);
   const noteFormRef = useRef();
   const dispatch = useDispatch();
   const [showAll, setShowAll] = useState(true);
@@ -30,15 +30,16 @@ const Page = () => {
       title: 'id',
       dataIndex: 'id',
       key: 'id',
-    }, {
+    },
+    {
       title: 'content',
       dataIndex: 'content',
       key: 'content',
       // eslint-disable-next-line react/display-name
       render: (_, record) => (
-        <Link to={`/notes/${record.id}`}>{record.content}</Link>
-      )
-    }
+        <Link to={`/main/note/${record.id}`}>{record.content}</Link>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -47,36 +48,25 @@ const Page = () => {
 
   return (
     <div>
-      {
-        user && (
-          <Toggleable
-            ref={noteFormRef}
-            buttonLabel={(
-              <span>
-                <PlusOutlined />
-                <span>new note</span>
-              </span>
-            )}
-          >
-            <NoteForm
-              createNote={createNote}
-            />
-          </Toggleable>
-        )
-      }
-      <Button
-          style={{ margin: '10px 0' }}
-          onClick={handleToggleShowAll}
+      {user && (
+        <Toggleable
+          ref={noteFormRef}
+          buttonLabel={
+            <span>
+              <PlusOutlined />
+              <span>new note</span>
+            </span>
+          }
         >
-          {showAll ? 'show important' : 'show all'}
+          <NoteForm createNote={createNote} />
+        </Toggleable>
+      )}
+      <Button style={{ margin: '10px 0' }} onClick={handleToggleShowAll}>
+        {showAll ? 'show important' : 'show all'}
       </Button>
 
-      <Table
-        rowKey={'id'}
-        columns={columns}
-        dataSource={notesToShow}
-       />
-  </div>
+      <Table rowKey={'id'} columns={columns} dataSource={notes} />
+    </div>
   );
 };
 

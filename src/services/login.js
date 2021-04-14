@@ -1,4 +1,4 @@
-import http from './index';
+import http from './http';
 
 const baseUrl = '/api/login';
 

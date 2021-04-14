@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { Button, Layout, Menu, Dropdown, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import noteServer from '../../services/notes';
+import { rooters } from '../../pages/main';
+import { userLogoutAction } from '../../actions/userAction';
 import './index.css';
-import { routers } from '../../router';
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = ({ children }) => {
-  const {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const  {
     location: { pathname },
-  } = useHistory();
-  const [collapsed, setCollapsed] = useState(false);
+  } = history;
   const [currentKey, setCurrentKey] = useState('');
 
-  const toggle = () => {
-    setCollapsed(!collapsed);
+  const handleLogout = () => {
+    noteServer.setToken(null);
+    dispatch(userLogoutAction());
+    history.push('/login');
   };
 
   useEffect(() => {
-    setCurrentKey(pathname);
+    let _currentKey = pathname;
+    if (pathname.startsWith('/main/note')) {
+      _currentKey = '/main/notes';
+    } else if (pathname === '/main/') {
+      _currentKey = '/main/home';
+    }
+    setCurrentKey(_currentKey);
   }, []);
 
   return (
@@ -35,9 +43,6 @@ const MainLayout = ({ children }) => {
           position: 'fixed',
           left: 0,
         }}
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
       >
         <div className="logo" />
         <Menu
@@ -46,7 +51,7 @@ const MainLayout = ({ children }) => {
           selectedKeys={[currentKey]}
           onClick={(event) => setCurrentKey(event.key)}
         >
-          {routers.map((item) => {
+          {rooters.map((item) => {
             return (
               !item.hide && (
                 <Menu.Item key={item.path} icon={<UserOutlined />}>
@@ -58,13 +63,29 @@ const MainLayout = ({ children }) => {
         </Menu>
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: 200 }}>
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          <span className="trigger" onClick={toggle}>
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </span>
+        <Header className="site-layout-header">
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="0">
+                  <Button type='link'>关于我</Button>
+                </Menu.Item>
+
+                <Menu.Item key="1">
+                <Button type='link' onClick={handleLogout}>退出</Button>
+                </Menu.Item>
+              </Menu>
+            }
+            trigger={['click']}
+          >
+            <Avatar
+              style={{ backgroundColor: '#87d068' }}
+              icon={<UserOutlined />}
+            />
+          </Dropdown>
         </Header>
         <Content
-          className="site-layout-background"
+          className="site-layout-content"
           style={{
             margin: '24px 16px',
             padding: 24,

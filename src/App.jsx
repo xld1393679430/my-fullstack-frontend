@@ -1,31 +1,37 @@
 import React, { useEffect } from 'react';
-import { BackTop } from 'antd';
-import noteServer from './services/notes';
-import RootRouter from './router';
-import MainLayout from './layout/mainLayout';
-import { userUpdateAction } from './actions/userAction';
-import { useDispatch } from 'react-redux';
+import { Switch, Redirect, Route, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { message } from 'antd';
+import { userUpdateAction } from '@/actions/userAction';
+import noteServer from '@/services/notes';
+import { lazyComponent } from '@/pages/main';
+import Main from '@/pages/main';
 import './App.css';
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { user } = useSelector((state) => state);
 
   useEffect(() => {
-    const loggedNoteappUser = localStorage.getItem('loggedNoteappUser');
+    console.log(loggedNoteappUser, history, 'loggedNoteappUser');
     if (loggedNoteappUser) {
       const _user = JSON.parse(loggedNoteappUser);
       dispatch(userUpdateAction(_user));
       noteServer.setToken(_user.token);
+    } else {
+      history.replace('/login');
+      message.warn('登录信息失效， 请重重登录');
+      return;
     }
   }, []);
 
   return (
-    <div>
-        <MainLayout >
-          <BackTop />
-          <RootRouter />
-        </MainLayout>
-    </div>
+    <Switch>
+      <Redirect from="/" to={user ? '/main/' : '/login'} exact={true} />
+      <Route path={'/main'} component={Main} />
+      <Route path={'/login'} exact={true} component={lazyComponent('login')} />
+    </Switch>
   );
 }
 

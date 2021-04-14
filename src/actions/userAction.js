@@ -21,8 +21,7 @@ export const userLoginAction = ({ username, password }) => {
         try {
             const _user = await loginServer.login(username, password);
             message.success({ content: '登录成功', key: loginMessageKey });
-            localStorage.setItem('loggedNoteappUser', JSON.stringify(_user));
-            noteServer.setToken(_user.token);
+            noteServer.setToken(_user);
             dispatch({
                 type: 'LOGIN',
                 data: _user
