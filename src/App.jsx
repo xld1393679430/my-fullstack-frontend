@@ -14,7 +14,7 @@ function App() {
   const { user } = useSelector((state) => state);
 
   useEffect(() => {
-    console.log(loggedNoteappUser, history, 'loggedNoteappUser');
+    const loggedNoteappUser = localStorage.getItem('loggedNoteappUser');
     if (loggedNoteappUser) {
       const _user = JSON.parse(loggedNoteappUser);
       dispatch(userUpdateAction(_user));

@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import noteServer from '../../services/notes';
-import { rooters } from '../../pages/main';
+import { routers } from '../../pages/main';
 import { userLogoutAction } from '../../actions/userAction';
 import './index.css';
 
@@ -51,7 +51,7 @@ const MainLayout = ({ children }) => {
           selectedKeys={[currentKey]}
           onClick={(event) => setCurrentKey(event.key)}
         >
-          {rooters.map((item) => {
+          {routers.map((item) => {
             return (
               !item.hide && (
                 <Menu.Item key={item.path} icon={<UserOutlined />}>

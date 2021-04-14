@@ -11,7 +11,7 @@ export const lazyComponent = (path) => {
   });
 };
 
-export const rooters = [
+export const routers = [
   {
     path: '/main/home',
     title: '首页',
@@ -67,7 +67,7 @@ function Main() {
   return (
     <MainLayout>
       <Switch>
-        {rooters.map((item) => {
+        {routers.map((item) => {
           if (item.isRedirect) {
             return <Redirect key={item.path} to={item.redirect} exact />;
           }
