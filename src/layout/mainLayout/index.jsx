@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Layout, Menu, Dropdown, Avatar } from 'antd';
+import { Button, Layout, Menu, Dropdown, Avatar, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import noteServer from '../../services/notes';
 import { routers } from '../../pages/main';
 import { userLogoutAction } from '../../actions/userAction';
+import Weather from '../../components/weather';
 import './index.css';
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const  {
+  const { user } = useSelector((state) => state);
+  const {
+    replace,
     location: { pathname },
-  } = history;
+  } = useHistory();
   const [currentKey, setCurrentKey] = useState('');
 
   const handleLogout = () => {
     noteServer.setToken(null);
     dispatch(userLogoutAction());
-    history.push('/login');
+    replace('/login');
   };
 
   useEffect(() => {
@@ -64,15 +66,27 @@ const MainLayout = ({ children }) => {
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: 200 }}>
         <Header className="site-layout-header">
+          <Weather style={{ marginRight: 20 }} />
           <Dropdown
             overlay={
               <Menu>
                 <Menu.Item key="0">
-                  <Button type='link'>关于我</Button>
+                  <Button type="link">关于我</Button>
                 </Menu.Item>
+                <Menu.Divider />
 
                 <Menu.Item key="1">
-                <Button type='link' onClick={handleLogout}>退出</Button>
+                  <Button type="link">
+                    <span>当前登录人：</span>
+                    <span>{user && user.name}</span>
+                  </Button>
+                </Menu.Item>
+                <Menu.Divider />
+
+                <Menu.Item key="2">
+                  <Button type="link" onClick={handleLogout}>
+                    退出
+                  </Button>
                 </Menu.Item>
               </Menu>
             }

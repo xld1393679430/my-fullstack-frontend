@@ -10,8 +10,6 @@ const LoginForm = ({
     <div>
       <h2>Login</h2>
       <Form onFinish={() => {
-        setUsername('');
-        setPassword('');
         handleLogin({ username, password });
       }}
       >

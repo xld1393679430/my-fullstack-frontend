@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DribbbleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Toggleable from '../../components/Toggleable';
 import LoginForm from './LoginForm';
@@ -10,10 +10,18 @@ import LoginLayout from '../../layout/loginLayout';
 const Page = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { user } = useSelector(state => state);
+
   const handleLogin = async ({ username, password }) => {
-    await dispatch(userLoginAction({ username, password }));
-    history.replace('/main/users');
+    dispatch(userLoginAction({ username, password }));
   };
+
+  useEffect(() => {
+    if (user) {
+      history.push('/main/users');
+    }
+  }, [user]);
+
   return (
     <LoginLayout>
       <Toggleable

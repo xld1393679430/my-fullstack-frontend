@@ -2,17 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import store from './store';
+import { store, persistor } from './store';
 import './index.css';
-
 
 ReactDOM.render(
   <Provider store={store}>
-    <HashRouter>
-    <App />
-    </HashRouter>
+    <PersistGate persistor={persistor}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

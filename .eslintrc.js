@@ -15,7 +15,6 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  'parser': 'babel-eslint',
   plugins: [
     'react',
     'jest',
@@ -51,6 +50,7 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-self-assign': 'off',
     'no-undef': 'off',
+    'no-empty': 'off',
   },
   'settings': {
     'react': {

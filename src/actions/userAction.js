@@ -17,7 +17,7 @@ export const userLogoutAction = () => {
 export const userLoginAction = ({ username, password }) => {
     return async dispatch => {
         const loginMessageKey = 'loginMessageKey';
-        message.loading({ content: '登陆中...', key: loginMessageKey });
+        const loadingMessage = message.loading({ content: '登陆中...', key: loginMessageKey });
         try {
             const _user = await loginServer.login(username, password);
             message.success({ content: '登录成功', key: loginMessageKey });
@@ -27,8 +27,11 @@ export const userLoginAction = ({ username, password }) => {
                 data: _user
             });
         } catch (error) {
-            console.log(error, error.response, 'error---');
-            message.warning({ content: `登录失败: ${error.response.data.error}`, key: loginMessageKey });
+            loadingMessage();
+            dispatch({
+                type: 'LOGIN',
+                data: null
+            });
         }
     };
 };
