@@ -1,32 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import http from '../../services/http';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'antd';
+import { initWeatherAction } from '../../actions/weatherAction';
 import './index.css';
 
 const Page = ({ ...otherProps }) => {
-    const [weather, setWeather] = useState({});
+  const dispatch = useDispatch();
+  const { weather } = useSelector((state) => state);
 
-    useEffect(() => {
-        http.get('/api/weather').then(res => {
-            if (res.data && res.data.result) {
-                const { city, realtime: { info, direct }, } = res.data.result;
-                setWeather(() => {
-                   return {
-                    city,
-                    info,
-                    direct,
-                   };
-                });
-            }
-        });
-    }, []);
+  const getLatestWeather = () => {
+    dispatch(initWeatherAction());
+  };
 
-    return (
+  useEffect(() => {
+    if (!weather) {
+      getLatestWeather();
+    }
+  }, [weather]);
+
+  return (
+    <>
+      {weather && (
         <div {...otherProps} className={'weather-container'}>
-            <div>{weather.city}</div>
-            <div>{weather.info}</div>
-            <div>{weather.direct}</div>
+          <div>
+            <div>城市：{weather.city}</div>
+            <div>天气：{weather.info}</div>
+            <div>风向：{weather.direct}</div>
+          </div>
+          <Button type="link" className={'refresh'} onClick={getLatestWeather}>
+            <span>刷新天气</span>
+          </Button>
         </div>
-    );
+      )}
+    </>
+  );
 };
 
 export default Page;

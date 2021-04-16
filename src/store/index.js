@@ -5,16 +5,19 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import noteReducer from '../reducers/noteReducer';
 import userReducer from '../reducers/userReducer';
+import weatherReducer from '../reducers/weatherReducer';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user']
+    whitelist: ['user', 'weather']
 };
 
 const reducer = combineReducers({
     notes: noteReducer,
-    user: userReducer
+    user: userReducer,
+    weather: weatherReducer,
+
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
